@@ -13,8 +13,25 @@ class action_plugin_jirainfo extends DokuWiki_Action_Plugin {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookjs');
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'setConf');
+        $controller->register_hook('TOOLBAR_DEFINE', 'AFTER', $this, 'insert_button', []);
     }
-    
+
+    /**
+     * Inserts the jirainfo button into editor's toolbar
+     * @param Doku_Event $event
+     * @param $param
+     */
+    function insert_button(Doku_Event $event, $param) {
+        $event->data[] = [
+            'type' => 'format',
+//            'title' => $this->getLang('qb_abutton'),
+            'title' => 'the button text 555',
+            'icon' => '../../plugins/jirainfo/src/icon.svg',
+            'open' => '<xmp>',
+            'close' => '</xmp>',
+        ];
+    }
+
     /**
      * handle ajax requests
      */
