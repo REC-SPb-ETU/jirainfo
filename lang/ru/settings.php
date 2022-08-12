@@ -12,4 +12,4 @@ $lang['apiUrl']  = "URL-ссылка для Jira API";
 $lang['popoverTrigger'] = "Событие для открытия всплывающего окна";
 $lang['popoverPlacement'] = "Положение всплывающего окна";
 $lang['popoverAnimation'] = "Анимация при открытии";
-$lang['taskHideField'] = "Спрятать поля в всплывающем окне";
+$lang['taskHideField'] = "Спрятать поля во всплывающем окне";
