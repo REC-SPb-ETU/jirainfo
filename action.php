@@ -5,6 +5,9 @@
  * @author     Vadim Balabin <vadikflint@gmail.com>
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  */
+
+require_once DOKU_INC.'lib/plugins/jirainfo/utils.php';
+
 class action_plugin_jirainfo extends DokuWiki_Action_Plugin {
 
     protected $fields = ['status', 'priority', 'issuetype', 'comment']; // Default fields for viewing in popover    
@@ -124,8 +127,7 @@ class action_plugin_jirainfo extends DokuWiki_Action_Plugin {
      */
     public function getTaskUrl (String $key = null)
     {
-        $arrURL = parse_url($this->getConf('apiUrl'));
-        return $arrURL['scheme'] .'://'. $arrURL['host'] .'/browse/'. $key;                
+        return Utilities::getTaskUrl($key, $this->getConf('apiUrl'));                
     }
 
     public function _hookjs(Doku_Event $event) 
