@@ -9,6 +9,8 @@
 // must be run within Dokuwiki
 if(!defined('DOKU_INC')) die();
 
+require_once DOKU_INC.'lib/plugins/jirainfo/utils.php';
+
 /**
  * All DokuWiki plugins to extend the parser/rendering mechanism
  * need to inherit from this class
@@ -72,6 +74,29 @@ class syntax_plugin_jirainfo extends DokuWiki_Syntax_Plugin
                     $renderer->doc .= '</a>';
                     break;
             }
+        } elseif ($mode == 'odt') {
+            $this->render_for_odt($renderer, $data);
+        }
+    }
+
+    public function render_for_odt(Doku_Renderer $renderer, $data) {
+        list($state, $match) = $data;
+        switch ($state) {
+            case DOKU_LEXER_ENTER:
+                $renderer->strong_open();
+                $renderer->underline_open();
+                $renderer->doc = $match;		
+                break;			
+            
+            case DOKU_LEXER_UNMATCHED:
+                $url = Utilities::getTaskUrl($renderer->doc, $this->getConf('apiUrl'));
+                $renderer->externallink($url, $match);
+                break;
+
+            case DOKU_LEXER_EXIT:
+                $renderer->underline_close();
+                $renderer->strong_close();
+                break;
         }
     }
 }		
