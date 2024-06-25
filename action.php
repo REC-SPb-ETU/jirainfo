@@ -16,6 +16,22 @@ class action_plugin_jirainfo extends DokuWiki_Action_Plugin {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,'_ajax_call');
         $controller->register_hook('TPL_METAHEADER_OUTPUT', 'BEFORE', $this, '_hookjs');
         $controller->register_hook('DOKUWIKI_STARTED', 'AFTER', $this, 'setConf');
+        $controller->register_hook('TOOLBAR_DEFINE', 'AFTER',  $this, 'addButton');
+    }
+
+    /**
+    * Add the button to the toolbar.
+    *
+    */
+    public function addButton(&$event, $param) {
+        $event->data[] = array(
+            'type'   => 'format',
+            'title'  => 'jirainfo link',
+            'icon'   => '../../plugins/jirainfo/src/icon_for_button.svg',
+            'open'   => '<ji key="JIRA_ID-1">',
+            'close'  => '</ji>',
+            'block'  => false
+        );
     }
     
     /**
